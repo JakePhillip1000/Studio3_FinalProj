@@ -20,6 +20,7 @@ from Paralympic2050 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    path('', include("Paralympic2050.urls")) 
+
+    # get the url from the urls.py inside application folder
+    path('', include("Paralympic2050.urls")),
 ]

@@ -9,6 +9,6 @@ from django.contrib import messages
 import numpy as np
 import json
 
-def TestPage(request):
-    page = loader.get_template("testpage.html")
-    return HttpResponse(page.render())
+class RegisterPage(View):
+    def get(self, request):
+        return render(request, "register.html")

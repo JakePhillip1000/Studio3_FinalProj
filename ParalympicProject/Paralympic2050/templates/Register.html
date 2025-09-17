@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Paralympic2050</title>
+
+        {% load static %} 
+        {% block style %}
+            <link rel="stylesheet" href="{% static 'css_file/register.css' %}?v=1.0">
+            <link rel="icon" type = "image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
+        {% endblock %}
+    </head>
+<body>
+    <div class = "page-bg">
+        <img src = "{% static 'img/login_register_img/bg_register.png' %}" alt = "ParalympicBg">
+    </div> 
+
+    <section>
+        <div class = "paralympic-logo">
+            <img src = "{% static 'img/login_register_img/IPC_logo2white.png' %}" width="550px" alt = "ParalympicBg">
+        </div>
+    <section>
+
+    <section>
+        <div class = "register-cont">
+            <h1>Sign Up as Admin</h1>
+            
+            <!-- Create the register forms -->
+            <form method = "post">
+                {% csrf_token %}
+                <input type = "text" name = "username" id = "username" placeholder= "Enter your email or username: ">
+                <input type = "text" name = "password" id = "password" placeholder="Enter your password">
+                <input type = "text" name = "conpass" id = "conpass" placeholder="Confirm your password">
+            
+                <div class = "verify">
+                    <input type = "text" name = "verfication" id = "verification" placeholder="Verification code">
+                    <button type = "button" class = "veri-btn">Verify</button>
+                </div>
+
+                <div class = "submit-ctn">
+                    <button type = "submit" class = "signup-btn">Sign up</button>
+                </div>
+            </form>
+
+            <hr>
+            <div class="social-media">
+                <button class="google-btn">
+                    <img src="{% static 'img/login_register_img/search.png' %}" alt="Google" width= "20px" class="btn-icon">
+                    Sign up with Google
+                </button>
+
+                <button class="facebook-btn">
+                    <img src="{% static 'img/login_register_img/communication.png' %}" alt="Facebook" width="20px" class="btn-icon">
+                    Sign up with Facebook
+                </button>
+            </div>
+
+            <p class="alr-acc">Already have an account? <a href="">Login</a></p>
+        </div>
+    <section>
+</body>
+</html>

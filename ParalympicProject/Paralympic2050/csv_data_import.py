@@ -3,6 +3,7 @@ import os
 import django
 import sys
 
+##### Add the path
 sys.path.append(r"C:\Users\ACE\OneDrive\Studio3_FinalProj")  
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ParalympicProject.settings")  
 django.setup()

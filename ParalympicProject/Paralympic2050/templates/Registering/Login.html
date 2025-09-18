@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paralympic2050</title>
+
+    {% load static %} 
+    {% block style %}
+        <link rel="stylesheet" href="{% static 'css_file/login.css' %}?v=1.0">
+        <link rel="icon" type="image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
+    {% endblock %}
+</head>
+<body>
+    <!--The PAGE bg-->
+    <div class="page-bg">
+        <img src="{% static 'img/login_register_img/bg_register.png' %}" alt="ParalympicBg">
+    </div> 
+
+    <section>
+        <div class="paralympic-logo">
+            <img src="{% static 'img/login_register_img/IPC_logo2white.png' %}" width="550px" alt="Paralympic Logo">
+        </div>
+    </section>
+
+    <section>
+        <div class="login-cont">
+            <h1>Login as Admin</h1>
+            
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="username" id="username" placeholder="Enter your email or username">
+                <input type="password" name="password" id="password" placeholder="Enter your password">
+            
+                <div class="remember-and-forgot">
+                    <label for="remember" class="remember">
+                        <input type="checkbox" id="remember" name="remember" value="remember">
+                        <span>Remember me</span>
+                    </label>
+
+                    <a href="">Forgot your password?</a>
+                </div>
+
+                <div class="login-submission">
+                    <button type="submit" class="login-btn">Login</button>
+                </div>
+            </form>
+
+            <div class="social-media-login">
+                <button class="google-btn-login">
+                    <img src="{% static 'img/login_register_img/search.png' %}" alt="Google" width="20px" class="btn-icon">
+                    Login with Google
+                </button>
+
+                <button class="facebook-btn-login">
+                    <img src="{% static 'img/login_register_img/communication.png' %}" alt="Facebook" width="20px" class="btn-icon">
+                    Login with Facebook
+                </button>
+            </div>
+
+            <p class="dont-acc">Don't have an account? <a href="{% url 'Paralympic2050:register' %}">Sign up</a></p>
+        </div>
+    </section>
+</body>
+</html>

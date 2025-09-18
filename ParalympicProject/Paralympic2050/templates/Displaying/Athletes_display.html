@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Paralympic2050</title>
+
+        {% load static %} 
+        {% block style %}
+            <link rel="stylesheet" href="{% static 'css_file/athlete_display_style.css' %}?v=1.0">
+            <link rel="icon" type = "image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
+        {% endblock %}
+    </head>
+
+<body>
+    <h1>Example list of Athletes (page format will change later)</h1>
+    <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Country</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Classification</th>
+                <th>Profile Image</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for x in athletes %}
+                <tr>
+                    <td>{{ x.bid }}</td>
+                    <td>{{ x.country }}</td>
+                    <td>{{ x.firstName }}</td>
+                    <td>{{ x.lastName }}</td>
+                    <td>{{ x.gender }}</td>
+                    <td>{{ x.dateOfBirth|default:"NONE" }}</td>
+                    <td>{{ x.classification }}</td>
+                    <td>
+                        {% if athlete.imgProfile %}
+                            <img src="{{ x.imgProfile }}" alt="{{ athlete.firstName }}">
+                        {% else %}
+                            NONE
+                        {% endif %}
+                    </td>
+                    <td>{{ x.email|default:"NONE" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

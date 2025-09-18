@@ -1,0 +1,161 @@
+body {
+    font-family: Verdana;
+    color: white;
+    background-color: #6c89ff;
+    margin: 0;
+    padding: 0;
+}
+
+.page-bg img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-position: center;
+    image-rendering: auto;
+    -webkit-optimize-contrast: true;
+    backface-visibility: hidden;
+    z-index: -1;
+}
+
+.paralympic-logo {
+    background-color: transparent;
+    margin: 1px auto;
+    display: block;
+    text-align: center;
+    margin-top: 80px; 
+}
+
+.login-cont {
+    background: rgba(41, 38, 38, 0.9);
+    border-radius: 10px;
+    width: 40%;
+    box-shadow: 0 4px 10px rgba(28, 25, 25, 0.6);
+    margin: 20px auto; 
+    padding: 20px;
+    text-align: center;
+}
+
+.login-cont h1 {
+    font-family: "Hammersmith One", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.login-cont input {
+    width: 60%;
+    padding: 15px;
+    margin: 8px auto;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    display: block;
+}
+
+.remember-and-forgot {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 60%; 
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.remember {
+  display: flex;          
+  align-items: center;   
+  gap: 6px;               
+  white-space: nowrap;   
+}
+
+.remember span {
+  display: inline-block;  
+  white-space: nowrap;
+}
+
+.remember input {
+  margin: 0;
+  text-align: center;
+  display: flex;
+}
+
+.remember-and-forgot a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.remember-and-forgot a:hover {
+  text-decoration: underline;
+}
+
+.login-submission {
+    display: flex;
+    justify-content: center; 
+}
+
+.login-btn {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 18px;
+    width: 40%;
+    padding: 15px 30px;
+    background-color: #1b52be;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.login-btn:hover{
+    background-color: #143f94;
+}
+
+.dont-acc {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+.dont-acc a {
+    color: white;
+    font-weight: bold;
+}
+
+.dont-acc a:hover{
+    color: pink;
+}
+
+.social-media-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.google-btn-login, .facebook-btn-login {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    border-radius: 15px;
+    padding: 10px;
+    width: 50%;
+    border: none;
+    cursor: pointer;
+    color: #000;
+    background-color: #c9c9c9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.google-btn-login:hover, .facebook-btn-login:hover{
+    background-color: #9f9f9f;
+}

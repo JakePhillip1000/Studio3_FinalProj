@@ -40,7 +40,11 @@ body {
 }
 
 .register-cont h1{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Hammersmith One", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    text-emphasis: none;
+    text-align: center;
 }
 
 .register-cont input {
@@ -83,6 +87,10 @@ body {
     white-space: nowrap; 
 }
 
+.veri-btn:hover{
+    background-color: #164093;
+}
+
 .submit-ctn {
   display: flex;
   justify-content: center; 
@@ -104,6 +112,10 @@ body {
     margin-bottom: 10px;
 }
 
+.signup-btn:hover{
+    background-color: #164093;
+}
+
 hr {
     width: 100%;
 }
@@ -117,6 +129,10 @@ hr {
 .alr-acc a{
     color: white;
     font-weight: bold;
+}
+
+.alr-acc a:hover{
+    color: pink;
 }
 
 .social-media {
@@ -140,6 +156,10 @@ hr {
     background: #c9c9c9;
     justify-content: center;
     align-items: center;
+}
+
+.google-btn:hover, .facebook-btn:hover{
+    background: #959595;
 }
 
 

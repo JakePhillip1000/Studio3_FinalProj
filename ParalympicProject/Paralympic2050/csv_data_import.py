@@ -12,12 +12,19 @@ from Paralympic2050.models import Athletes
 
 #### For inserting single data, this is the postgreSQL command
 '''
+cd "your django project path"
+psql -U postgres -d Athletes_database_v2
+
+###### insertion into database
 INSERT INTO athletes
 (bid, country, firstName, lastName, gender, dateOfBirth, classification, imgProfile, email)
 VALUES
 (101, 'CAM', 'Jake', 'Phillip', 'Men', '2005-11-08', 'T62', NULL, NULL);
-'''
 
+#### Delete from database
+DELETE FROM athletes WHERE id = 102;
+
+'''
 
 ##### I recommend to upload data through calling py manage.py shell
 '''
@@ -68,6 +75,8 @@ def upload_data(path):
                 email= email
             )
             athletes_ls.append(athlete)
+
+        #### The method bulk_create will insert the objects into db
         Athletes.objects.bulk_create(athletes_ls)
 
     print(f"UPLOADING: {len(athletes_ls)}")

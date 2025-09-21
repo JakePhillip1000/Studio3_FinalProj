@@ -33,21 +33,21 @@
             <h1>Sign Up as Admin</h1>
             
             <!-- Create the register forms -->
-            <form method = "post">
+            <form method="post" id="register-form">
                 {% csrf_token %}
-                <input type = "text" name = "username" id = "username" placeholder= "Enter your email or username: ">
-                <input type = "text" name = "password" id = "password" placeholder="Enter your password">
-                <input type = "text" name = "conpass" id = "conpass" placeholder="Confirm your password">
-            
-                <div class = "verify">
-                    <input type = "text" name = "verfication" id = "verification" placeholder="Verification code">
-                    <button type = "button" class = "veri-btn">Verify</button>
-                </div>
+                <input type="text" name="username" id="username" placeholder="Enter your email or username" required>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                <input type="password" name="conpass" id="conpass" placeholder="Confirm your password" required>
 
-                <div class = "submit-ctn">
-                    <button type = "submit" class = "signup-btn">Sign up</button>
+                <div class="submit-ctn">
+                    <button type="submit" class="signup-btn">Sign up</button>
                 </div>
             </form>
+            
+            <!--Username taken and taken username-->
+            <input type="hidden" id="username_taken" value="{{ username_taken|default:False }}">
+            <input type="hidden" id="taken_username" value="{{ taken_username|default:'' }}">
+            <input type="hidden" id="password_mismatch" value="{{ password_mismatch|default:False }}">
 
             <hr>
             <div class="social-media">
@@ -65,5 +65,9 @@
             <p class="alr-acc">Already have an account? <a href="{% url 'Paralympic2050:login' %}">Login</a></p>
         </div>
     <section>
+
+<!--JavaScript-->
+<script src="{% static 'js_file/register.js' %}"></script>
+
 </body>
 </html>

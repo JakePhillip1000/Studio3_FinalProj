@@ -17,7 +17,7 @@ psql -U postgres -d Athletes_database_v2
 
 ###### insertion into database
 INSERT INTO athletes
-(bid, country, firstName, lastName, gender, dateOfBirth, classification, imgProfile, email)
+(bid, country, "firstName", "lastName", gender, "dateOfBirth", classification, "imgProfile", email)
 VALUES
 (101, 'CAM', 'Jake', 'Phillip', 'Men', '2005-11-08', 'T62', NULL, NULL);
 

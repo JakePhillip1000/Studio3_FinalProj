@@ -27,23 +27,42 @@
         <div class="login-cont">
             <h1>Login as Admin</h1>
             
-            <form method="post">
+            <!--Login forms-->
+            <form method="post" id="login-form">
                 {% csrf_token %}
-                <input type="text" name="username" id="username" placeholder="Enter your email or username">
-                <input type="password" name="password" id="password" placeholder="Enter your password">
-            
+                <input type="text" name="username" id="username" placeholder="Enter your email or username" required>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
                 <div class="remember-and-forgot">
                     <label for="remember" class="remember">
                         <input type="checkbox" id="remember" name="remember" value="remember">
                         <span>Remember me</span>
                     </label>
-
                     <a href="">Forgot your password?</a>
                 </div>
 
                 <div class="login-submission">
                     <button type="submit" class="login-btn">Login</button>
                 </div>
+                
+                <!--When username not exist, show this paragraph-->
+                {% if not_exist %}
+                    <p id="username-error" style="color:red; font-weight:bold;">
+                        Username "{{ enter_user }}" does not exist.
+                    </p>
+                {% endif %}
+                
+                <!--wrong username or wrong pass-->
+                {% if wrong_password %}
+                    <p id="wrong-form" style="color:red; font-weight:bold;">
+                        Username or password incorrect
+                    </p>
+                {% endif %}
+
+                <!--Wrong username or pwd-->
+                <input type="hidden" id="wrong-pass" value="{% if wrong_password %}1{% else %}0{% endif %}">
+                <input type="hidden" id="username-not-exist" value="{% if username_not_exist %}1{% else %}0{% endif %}">
+                <input type="hidden" id="entered-username" value="{{ entered_username|default:'' }}">     
             </form>
 
             <div class="social-media-login">
@@ -61,5 +80,9 @@
             <p class="dont-acc">Don't have an account? <a href="{% url 'Paralympic2050:register' %}">Sign up</a></p>
         </div>
     </section>
+
+<!--JS file inside the statics JS_file path-->
+<script src="{% static 'js_file/login.js' %}"></script>
+
 </body>
 </html>

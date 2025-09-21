@@ -17,3 +17,13 @@ class Athletes(models.Model):
         db_table  = "athletes" ###### I will rename the database table to athletes
         verbose_name = "Athlete"
         verbose_name_plural = "Athletes"
+
+#### This is for the register sign up username and email storage
+class UserData(models.Model):  #### This one will automatically turns into the form field (<input> in HTML)
+    username = models.CharField(max_length=20, unique=True)
+    password = models.CharField(max_length=128) 
+
+    class Meta:
+        db_table  = "userdatas"
+        verbose_name = "userdata"
+        verbose_name_plural = "userdatas" 

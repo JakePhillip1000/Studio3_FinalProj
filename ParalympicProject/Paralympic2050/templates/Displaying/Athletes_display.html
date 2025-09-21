@@ -10,47 +10,89 @@
             <link rel="stylesheet" href="{% static 'css_file/athlete_display_style.css' %}?v=1.0">
             <link rel="icon" type = "image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
         {% endblock %}
+
+        <header class="head">
+            <div class="head-left">
+                <div class="logo-div">
+                    <img src="{% static 'img/login_register_img/IPC_logo2white.png' %}" alt="Paralympic Logo" width="450px">
+                </div>
+                <h1 class="athletes-title">Athletes List</h1>
+            </div>
+
+            <div class="username-div">
+                <span class="username-text">
+                    {% if request.session.logged_in_user %}
+                        {{ request.session.logged_in_user }}
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </span>
+                <img id="user-img" src="{% static 'img/login_register_img/UserW.png' %}" alt="User" width="90px">
+
+                <!-- The menu -->
+                <div id="user-menu" class="user-menu" style="display:none;">
+                    <ul>
+                        <li id="logout-btn">Logout</li>
+                        <li id="change-pic-btn">Change Profile Picture</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
     </head>
 
 <body>
-    <h1>Example list of Athletes (page format will change later)</h1>
-    <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Country</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>Date of Birth</th>
-                <th>Classification</th>
-                <th>Profile Image</th>
-                <th>Email</th>
-            </tr>
-        </thead>
+    <div class="athletes-container">
+        {% for x in athletes %}
+        <div class="athlete-card">
+            <div class="card-front">
+            <!--I will set these elements into hiding state-->
+            <!-- When hovering it, these elements will show -->
+                
+                <div class = "card-head">
+                    <div class="athlete-name">
+                        {{ x.firstName }} {{ x.lastName }}
 
-        <tbody>
-            {% for x in athletes %}
-                <tr>
-                    <td>{{ x.bid }}</td>
-                    <td>{{ x.country }}</td>
-                    <td>{{ x.firstName }}</td>
-                    <td>{{ x.lastName }}</td>
-                    <td>{{ x.gender }}</td>
-                    <td>{{ x.dateOfBirth|default:"NONE" }}</td>
-                    <td>{{ x.classification }}</td>
-                    <td>
-                        {% if athlete.imgProfile %}
-                            <img src="{{ x.imgProfile }}" alt="{{ athlete.firstName }}">
-                        {% else %}
-                            NONE
+                        {% if x.gender|lower == "men" %}
+                            <img src="{% static 'img/login_register_img/male_genderW.png' %}" alt="men" width="20px">
+                        {% elif x.gender|lower == "women" %}
+                             <img src="{% static 'img/login_register_img/femenineW.png' %}" alt="women" width="20px">
                         {% endif %}
-                    </td>
-                    <td>{{ x.email|default:"NONE" }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
 
+                <!--Hiding image, it will show when hover the card-->
+                <div class="hover-images">
+                    <img src="{% static 'img/login_register_img/composed.png' %}" alt="img1">
+                    <img src="{% static 'img/login_register_img/user_bl.png' %}" alt="img2">
+
+                    <!-- Delete form -->
+                    <form method="post" style="display:inline;" class="delete-athlete-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="athlete_id" value="{{ x.id }}">
+                        <button type="submit" style="border:none; background:none; padding:0;">
+                            <img src="{% static 'img/login_register_img/trashR.png' %}" alt="Delete Athlete">
+                        </button>
+                    </form>
+                </div>
+
+                <div class="athlete-info">
+                    <p>D.O.B: {{ x.dateOfBirth|date:"d/m/Y" }}</p>
+                    <p>Gender: {{ x.gender }}</p>
+                    <p>Contacts: {{ x.email }}</p>
+                    <p>{{ x.phone|default:"-" }}</p>
+                </div>
+                <div class="competition-info">
+                    <p>Class: {{ x.classification }}</p>
+                    <p>Sport: {{ x.sport|default:"-" }}</p>
+                    <p>BIB: {{ x.bid }}</p>
+                    <p>Remark:</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+<!--JavaScript-->
+<script src="{% static 'js_file/athletes.js' %}"></script>
 </body>
 </html>

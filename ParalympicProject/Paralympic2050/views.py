@@ -11,8 +11,9 @@ from .models import Athletes, UserData
 from django.contrib import messages
 import numpy as np
 import json
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, logout, login
 from django.http import JsonResponse
+from django.db.models import Q ### I think this is for the query
 
 ############## Register page
 class RegisterPage(View): #### This is like GET and POST method in HTML forms handling
@@ -93,8 +94,21 @@ class AthleteDisplay(ListView):
     temp = "Displaying/Athletes_display.html"
     
     def get(self, request, *args, **kwargs):
+        ###### This is for the search features
+        key = request.GET.get("keyword", "").strip()
+        gender = request.GET.get("gender", "").strip()
+
         athletes = Athletes.objects.all()
-        ath_dictionary  = {"athletes": athletes}
+
+        if key is not None:
+           athletes = athletes.filter(
+               Q(firstName__icontains=key) | Q(lastName__icontains=key)
+           )
+
+        if gender is not None:
+            athletes = athletes.filter(gender__iexact=gender)
+
+        ath_dictionary = {"athletes": athletes, "keyword": key, "gender": gender}
         return render(request, self.temp, ath_dictionary)
     
     def post(self, request, *args, **kwargs):
@@ -113,6 +127,10 @@ class AthleteDisplay(ListView):
 class LogoutView(View):
     def post(self, request):
         print("Before logout: {}".format( request.session.get('logged_in_user')))
+        
+        logout(request) 
+        request.session.pop("logged_in_user", None)
+
         if "logged_in_user" in request.session:
             del request.session['logged_in_user']
         

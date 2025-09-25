@@ -14,9 +14,17 @@
         <header class="head">
             <div class="head-left">
                 <div class="logo-div">
-                    <img src="{% static 'img/login_register_img/IPC_logo2white.png' %}" alt="Paralympic Logo" width="450px">
+                    <img src="{% static 'img/login_register_img/IPC_logo2white.png' %}" alt="Paralympic Logo" width="300px">
                 </div>
-                <h1 class="athletes-title">Athletes List</h1>
+
+                <nav class = "nav-links">
+                    <a href = "#">Home</a>
+                    <a href = "#">Results</a>
+                    <a href = "#">Shop</a>
+                    <a href = "#">About Paralympics</a>
+                    <a href = "#">Book a ticket</a>
+                    <a href = "#">Managements </a>
+                </nav> 
             </div>
 
             <div class="username-div">
@@ -32,14 +40,33 @@
                 <!-- The menu -->
                 <div id="user-menu" class="user-menu" style="display:none;">
                     <ul>
-                        <li id="logout-btn">Logout</li>
-                        <li id="change-pic-btn">Change Profile Picture</li>
+                        {% if request.session.logged_in_user %}
+                            <li id="logout-btn">Logout</li>
+                            <li id="change-pic-btn">Change Profile Picture</li>
+                        {% else %}
+                            <li><a id="login-btn" href="{% url 'Paralympic2050:login' %}">Login</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </header>
-    </head>
 
+        <!--Search and filter method-->
+        <div class="search-filter">
+            <form method="GET" action="{% url 'Paralympic2050:athletes' %}">
+                <input type="text" name="keyword" placeholder="Search by name" value="{{ request.GET.keyword|default:'' }}">
+                
+                <select id="gender-filter" name="gender">
+                    <option value="">Every Gender</option>
+                    <option value="Women" {% if request.GET.gender == "Women" %}selected{% endif %}>Women</option>
+                    <option value="Men" {% if request.GET.gender == "Men" %}selected{% endif %}>Men</option>
+                </select>
+
+                <button type="submit" class="search">Search</button>
+            </form>    
+        </div>
+
+    </head>
 <body>
     <div class="athletes-container">
         {% for x in athletes %}
@@ -75,6 +102,13 @@
                     </form>
                 </div>
 
+                <!--Edit Athlete form-->
+                <!--
+                    For this approach, When the admin edit the info of athletes,
+                    the info inside the postgreSQL db of that athlete will change
+                -->
+                    
+
                 <div class="athlete-info">
                     <p>D.O.B: {{ x.dateOfBirth|date:"d/m/Y" }}</p>
                     <p>Gender: {{ x.gender }}</p>
@@ -84,7 +118,7 @@
                 <div class="competition-info">
                     <p>Class: {{ x.classification }}</p>
                     <p>Sport: {{ x.sport|default:"-" }}</p>
-                    <p>BIB: {{ x.bid }}</p>
+                    <p>BID: {{ x.bid }}</p>
                     <p>Remark:</p>
                 </div>
             </div>

@@ -8,6 +8,7 @@ class Athletes(models.Model):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
     gender = models.CharField(max_length=10)
+    age = models.IntegerField(blank=True, null=True)
     dateOfBirth = models.DateField(null=True, blank=True)
     classification = models.CharField(max_length=50)
     imgProfile = models.URLField(max_length=255, blank=True, null=True)

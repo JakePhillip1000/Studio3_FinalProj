@@ -1,22 +1,118 @@
-window.addEventListener("DOMContentLoaded", initUserMenu);
-
-function initUserMenu() {
+window.addEventListener("DOMContentLoaded", function () {
     const userImg = document.getElementById("user-img");
     const userMenu = document.getElementById("user-menu");
     const logoutBtn = document.getElementById("logout-btn");
-    const loginBtn = document.getElementById("login-btn");
 
-    userImg.onclick = function (e) {
-        e.stopPropagation();
-        userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
-    };
+    // This is for selecting the athlete
+    /*
+        THis method, I use some help from the chatbot for better
+        optimization of the code
 
-    document.onclick = function() {
-        userMenu.style.display = "none";
-    };
+        When clicked selected button, the athlete card will be able to
+        select. Clicked cancel to cancel the selection
+    */
+    const selectBtn = document.querySelector(".select-ath");
+    const cancelBtn = document.querySelector(".cancel");
+    const deleteBtn = document.querySelector(".delete-select");
+    const athleteCards = document.querySelectorAll(".athlete-card");
+
+    let selectionMode = false;
+    let selectedAthletes = new Set();
+
+    selectBtn.addEventListener("click", function () {
+        selectionMode = true;
+        selectBtn.classList.add("hidden");
+        cancelBtn.classList.remove("hidden");
+        deleteBtn.classList.remove("hidden");
+        selectBtn.disabled = true;
+
+        athleteCards.forEach(card => {
+            card.classList.add("selectable");
+        });
+    });
+
+    cancelBtn.addEventListener("click", function () {
+        selectionMode = false;
+        selectedAthletes.clear();
+        athleteCards.forEach(card => card.classList.remove("selected", "selectable"));
+        cancelBtn.classList.add("hidden");
+        deleteBtn.classList.add("hidden");
+        selectBtn.classList.remove("hidden");
+        selectBtn.disabled = false;
+    });
+
+    athleteCards.forEach(card => {
+        card.addEventListener("click", function () {
+            if (!selectionMode){
+                 return;
+            }
+
+            const athleteId = card.dataset.id;
+            if (!athleteId) {
+                return;
+            }
+
+            if (selectedAthletes.has(athleteId)) {
+                selectedAthletes.delete(athleteId);
+                card.classList.remove("selected");
+            } 
+            else {
+                selectedAthletes.add(athleteId);
+                card.classList.add("selected");
+            }
+        });
+    });
+
+    // Delete selected athletes
+    deleteBtn.addEventListener("click", function () {
+        if (selectedAthletes.size === 0) {
+            alert("Please select athlete to delete (Nothing selected)");
+            return;
+        }
+
+        if (!confirm("Are you sure you want to delete all of these?")){
+            return;
+        }
+
+        const csrfToken = getCookie("csrftoken");
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "";  
+        form.style.display = "none";
+
+        const csrfInput = document.createElement("input");
+        csrfInput.type = "hidden";
+        csrfInput.name = "csrfmiddlewaretoken";
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+
+        selectedAthletes.forEach(id => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "delete_ids";  
+            input.value = id;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+    });
+
+    /// Use images
+    if (userImg) {
+        userImg.onclick = function (e) {
+            e.stopPropagation();
+            userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+        };
+
+        document.onclick = function () {
+            userMenu.style.display = "none";
+        };
+    }
 
     if (logoutBtn) {
-        logoutBtn.onclick = function() {
+        logoutBtn.onclick = function () {
             fetch("/logout/", {  
                 method: "POST",
                 headers: {
@@ -32,53 +128,103 @@ function initUserMenu() {
             });
         };
     }
-}
 
-// Searching features in JS for selected gender 
-const search = new URLSearchParams(window.location.search);
-const gender = params.get("gender");
-if (gender) {
-    document.getElementById("gender-filter").value = gender;
-}
-
-
-// Zoom the athelete card when I cliked the user_image
-let zoom_athletes = document.querySelectorAll(".hover-images img");
-
-for (let i = 0; i < zoom_athletes.length; i++) {
-    zoom_athletes[i].addEventListener("click", function(event) {
-        
-        if (event.target.closest(".delete-athlete-form")){
-            return; 
+    /*
+        Search and filter. This works with django 
+        (only for the gender filter)
+    */
+    const params = new URLSearchParams(window.location.search);
+    const gender = params.get("gender");
+    if (gender) {
+        const genderFilter = document.getElementById("gender-filter");
+        if (genderFilter) {
+            genderFilter.value = gender;
         }
+    }
 
-        event.stopPropagation();
+    // The zoom card function
+    // When I hover and clicked the user icon inside the athlete card, 
+    // the program will zoom the card (clone the card and display it again)
+    document.body.addEventListener("click", function(event) {
+        if ( // when these condition met, the zoom will not activate
+            event.target.matches(".hover-images img") && 
+            !event.target.closest(".delete-athlete-form") &&
+            !event.target.classList.contains("edit-btn")
+        ) {
+            event.stopPropagation();
 
-        let card = this.closest(".athlete-card");
+            let card = event.target.closest(".athlete-card");
 
-        let overlay = document.createElement("div");
-        overlay.className = "zoom-overlay";
-        document.body.appendChild(overlay);
+            let overlay = document.createElement("div");
+            overlay.className = "zoom-overlay";
+            document.body.appendChild(overlay);
 
-        let clonedCard = card.cloneNode(true);
-        clonedCard.classList.add("zoomed-card");
+            let clonedCard = card.cloneNode(true);
+            clonedCard.classList.add("zoomed-card");
 
-        let closeBtn = document.createElement("button");
-        closeBtn.className = "zoom-close-btn";
-        closeBtn.innerHTML = "X";
-        clonedCard.appendChild(closeBtn);
+            let closeBtn = document.createElement("button");
+            closeBtn.className = "zoom-close-btn";
+            closeBtn.innerHTML = "X";
+            clonedCard.appendChild(closeBtn);
 
-        document.body.appendChild(clonedCard);
+            document.body.appendChild(clonedCard);
 
-        function closeZoom() {
-            clonedCard.remove();
-            overlay.remove();
+            function closeZoom() {
+                clonedCard.remove();
+                overlay.remove();
+            }
+
+            closeBtn.addEventListener("click", closeZoom);
+            overlay.addEventListener("click", closeZoom);
         }
-
-        closeBtn.addEventListener("click", closeZoom);
-        overlay.addEventListener("click", closeZoom);
     });
-}
+
+    // Editing form athletes
+    const editBtns = document.querySelectorAll(".edit-btn");
+    const modal = document.getElementById("editFormModal");
+    const form = document.getElementById("athleteEditForm");
+
+    editBtns.forEach(btn => {
+        /*
+            This method will get the data from the database
+            using this.dataset.firstname (this is example to get the firstname From Db)
+            through the id of the input fields
+
+            After clicked the form submission it will save the data to db (new edit data)
+        */
+        btn.addEventListener("click", function (event) {
+            document.getElementById("athlete_id").value = this.dataset.id;
+            document.getElementById("firstName").value = this.dataset.firstname;
+            document.getElementById("lastName").value = this.dataset.lastname;
+            document.getElementById("gender").value = this.dataset.gender;
+
+            modal.classList.remove("hidden"); 
+        });
+    });
+
+    window.closeEditForm = function () {
+        modal.classList.add("hidden"); 
+    }
+
+    modal.addEventListener("click", function(event){
+        if(event.target === modal){
+            closeEditForm();
+        }
+    });
+
+    // athletes deletion handle (when hover and clicked deleted bin btn)
+    // This will delete the athlete, but there will be alert before you delete asking yes or no
+    const deleteForms = document.querySelectorAll(".delete-athlete-form");
+    deleteForms.forEach(form => {
+        form.addEventListener("submit", function(event) {
+            const confirmDelete = confirm("Are you sure you want to delete this athlete?");
+            if (!confirmDelete) {
+                event.preventDefault(); 
+            }
+        });
+    });
+
+});
 
 
 /*
@@ -100,17 +246,3 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-
-// athletes deletion handle
-// This will delete the athlete, but there will be alert before you delete asking yes or no
-const deleteForms = document.querySelectorAll(".delete-athlete-form");
-
-deleteForms.forEach(form => {
-    form.addEventListener("submit", function(event) {
-        const confirmDelete = confirm("Are you sure you want to delete this athlete?");
-        if (!confirmDelete) {
-            event.preventDefault(); 
-        }
-    });
-});

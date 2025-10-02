@@ -100,28 +100,69 @@ class AthleteDisplay(ListView):
 
         athletes = Athletes.objects.all()
 
-        if key is not None:
+        if key:
            athletes = athletes.filter(
                Q(firstName__icontains=key) | Q(lastName__icontains=key)
            )
+        
+        if gender and gender.lower() != "all":
+            athletes = athletes.filter(gender__iexact = gender)
 
-        if gender is not None:
+        if gender:
             athletes = athletes.filter(gender__iexact=gender)
 
         ath_dictionary = {"athletes": athletes, "keyword": key, "gender": gender}
         return render(request, self.temp, ath_dictionary)
     
-    def post(self, request, *args, **kwargs):
-        athlete_id = request.POST.get("athlete_id")
-        if athlete_id is not None:
-            try:
-                athlete = get_object_or_404(Athletes, id=athlete_id)
-                athlete.delete()
-            except Athletes.DoesNotExist:
-                messages.error(request, "Athletes not found")
+from django.http import JsonResponse
+import json
+
+class AthleteDisplay(ListView):
+    temp = "Displaying/Athletes_display.html"
+
+    def get(self, request, *args, **kwargs):
+        key = request.GET.get("keyword", "").strip()
+        gender = request.GET.get("gender", "").strip()
+
         athletes = Athletes.objects.all()
-        ath_data = {"athletes": athletes}
-        return render(request, self.temp, ath_data)
+
+        if key:
+           athletes = athletes.filter(
+               Q(firstName__icontains=key) | Q(lastName__icontains=key)
+           )
+        
+        if gender and gender.lower() != "all":
+            athletes = athletes.filter(gender__iexact=gender)
+
+        ath_dictionary = {"athletes": athletes, "keyword": key, "gender": gender}
+        return render(request, self.temp, ath_dictionary)
+    
+        
+    def post(self, request, *args, **kwargs):
+        #### Delete selected athletes 
+        delete_ids = request.POST.getlist("delete_ids")
+
+        if delete_ids:
+            Athletes.objects.filter(id__in=delete_ids).delete()
+            messages.success(request, f"Deleted {len(delete_ids)} athlete(s).")
+            athletes = Athletes.objects.all()
+            return render(request, self.temp, {"athletes": athletes})
+
+        #### Edit the athlete information
+        athlete_id = request.POST.get("athlete_id")
+        
+        if athlete_id:
+            athlete = get_object_or_404(Athletes, id=athlete_id)
+            athlete.firstName = request.POST.get("firstName", athlete.firstName)
+            athlete.lastName = request.POST.get("lastName", athlete.lastName)
+            athlete.gender = request.POST.get("gender", athlete.gender)
+            if request.POST.get("age"):
+                athlete.age = request.POST.get("age")
+            athlete.save()
+            messages.success(request, "Successfully updated")
+
+        athletes = Athletes.objects.all()
+        return render(request, self.temp, {"athletes": athletes})
 
 ##### Logged out view
 class LogoutView(View):

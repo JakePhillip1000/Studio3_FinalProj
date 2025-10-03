@@ -178,3 +178,4 @@ class LogoutView(View):
         print("After logout: {}".format(request.session.get('logged_in_user')))
             
         return JsonResponse({"status": "logged out"})
+    

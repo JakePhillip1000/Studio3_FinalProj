@@ -114,9 +114,6 @@ class AthleteDisplay(ListView):
         ath_dictionary = {"athletes": athletes, "keyword": key, "gender": gender}
         return render(request, self.temp, ath_dictionary)
     
-from django.http import JsonResponse
-import json
-
 class AthleteDisplay(ListView):
     temp = "Displaying/Athletes_display.html"
 
@@ -124,7 +121,7 @@ class AthleteDisplay(ListView):
         key = request.GET.get("keyword", "").strip()
         gender = request.GET.get("gender", "").strip()
 
-        athletes = Athletes.objects.all()
+        athletes = Athletes.objects.all().order_by('firstName', 'lastName')  # Alphabetical sorting
 
         if key:
            athletes = athletes.filter(
@@ -145,10 +142,10 @@ class AthleteDisplay(ListView):
         if delete_ids:
             Athletes.objects.filter(id__in=delete_ids).delete()
             messages.success(request, f"Deleted {len(delete_ids)} athlete(s).")
-            athletes = Athletes.objects.all()
+            athletes = Athletes.objects.all().order_by('firstName', 'lastName')
             return render(request, self.temp, {"athletes": athletes})
 
-        #### Edit the athlete information
+        ####### Edit the athlete information
         athlete_id = request.POST.get("athlete_id")
         
         if athlete_id:
@@ -156,13 +153,38 @@ class AthleteDisplay(ListView):
             athlete.firstName = request.POST.get("firstName", athlete.firstName)
             athlete.lastName = request.POST.get("lastName", athlete.lastName)
             athlete.gender = request.POST.get("gender", athlete.gender)
+            
             if request.POST.get("age"):
                 athlete.age = request.POST.get("age")
             athlete.save()
             messages.success(request, "Successfully updated")
 
-        athletes = Athletes.objects.all()
-        return render(request, self.temp, {"athletes": athletes})
+        ####### Add new athlete into the database
+        bib = request.POST.get("bib")
+        classification = request.POST.get("classification")
+        country = request.POST.get("country")
+        first_name = request.POST.get("first_name")
+        surname = request.POST.get("surname")
+        gender = request.POST.get("gender")
+        email = request.POST.get("email")
+        dob = request.POST.get("date_of_birth")
+
+        if (bib and classification and country and first_name and surname):
+            new_athlete = Athletes.objects.create(
+                bid=bib,
+                classification=classification,
+                country=country,
+                firstName=first_name,
+                lastName=surname,
+                gender=gender,
+                email= email if email else None,
+                dateOfBirth = dob,
+            )
+            messages.success(request, f"Athlete {first_name} {surname} added")
+
+        ##### Now this will filter athletes orderby alphabetical order
+        athletes = Athletes.objects.all().order_by("firstName", "lastName")
+        return redirect("Paralympic2050:athletes")
 
 ##### Logged out view
 class LogoutView(View):

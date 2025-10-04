@@ -10,12 +10,15 @@
             <link rel="stylesheet" href="{% static 'css_file/athlete_display_style.css' %}?v=1.0">
             <link rel="icon" type="image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
             
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
             <style>
                 .hidden { display: none !important; }
                 .athlete-card.selectable:hover { cursor: pointer; border: 2px dashed #00f; }
                 .athlete-card.selected { border: 3px solid red; }
             </style>
-            {% endblock %}
+        {% endblock %}
     </head>
 
 <body>
@@ -61,29 +64,31 @@
 
     <!--Banner displaying-->
     <section>
-        <img src="{% static 'img/banner_img/AT_display_title.png' %}" alt="Paralympic Logo" width="1650px">
+        <img src="{% static 'img/banner_img/AT_display_title.png' %}" alt="Paralympic Logo" width="100%">
     </section>
 
     <!--Search and filter method-->
     <div class="search-filter">
         <form method="GET" action="{% url 'Paralympic2050:athletes' %}">
-            <input type="text" name="keyword" placeholder="Search by name" value="{{ request.GET.keyword|default:'' }}">
-            
-            <select id="gender-filter" name="gender">
-                <option value="">Every Gender</option>
-                <option value="Women" {% if request.GET.gender == 'Women' %}selected{% endif %}>Women</option>
-                <option value="Men" {% if request.GET.gender == 'Men' %}selected{% endif %}>Men</option>
-            </select>
+            <div class="search-controls">
+                <input type="text" name="keyword" placeholder="Search by name" value="{{ request.GET.keyword|default:'' }}">
+                
+                <select id="gender-filter" name="gender">
+                    <option value="">Every Gender</option>
+                    <option value="Women" {% if request.GET.gender == 'Women' %}selected{% endif %}>Women</option>
+                    <option value="Men" {% if request.GET.gender == 'Men' %}selected{% endif %}>Men</option>
+                </select>
 
-            <button type="submit" class="search">Search</button>
-
-            <!--Add and delete athletes-->
-            <button class="add-ath" name="addAthlete">Add Athlete</button>
+                <button type="submit" class="search">Search</button>
+            </div>
+        </form> 
+        
+        <div class="ath-selection">
+            <button class="add-ath" name="addAthlete" type = "button">Add Athlete</button>
             <button class="select-ath" name="selectAthlete">Select Athlete</button>   
             <button class="cancel hidden" type="button" name="cancel">Cancel</button>
             <button class="delete-select hidden" type="button" name="delteselect">Delete Selected</button>
-        
-        </form>    
+        </div>
     </div>
 
     <div class="athletes-container">
@@ -93,8 +98,8 @@
             <!--I will set these elements into hiding state-->
             <!-- When hovering it, these elements will show -->
                 
-                <div class="card-head">
-                    <div class="athlete-name">
+                <div class="card-head"> 
+                    <div class="athlete-name"> <!--Specifying the gender images-->
                         {{ x.firstName }} {{ x.lastName }}
 
                         {% if x.gender|lower == "men" %}
@@ -146,6 +151,77 @@
         {% endfor %}
     </div>
 
+    <!--
+        This is the athlete form. It will display when clicked the 
+        add athlete button. After adding the athlete and clicked save and quit
+        the athlete data will be saved to the db
+
+        form submitted -> jS -> Django -> postgreSQL
+    -->
+    <div id = "add-AthModal" class = "modal hidden"> <!--class = "modal hidden"-->
+        <div class = "add-ath-cont">
+            <h2 class = "add-ath-title">
+                <section>
+                    <img src="{% static 'img/banner_img/add_title.png' %}" alt="Paralympic Logo" width="700px" height="80px">
+                </section>
+            </h2>
+            <form id = "AddAth-form" method = "POST" action="{% url 'Paralympic2050:athletes' %}">
+                {% csrf_token %}
+
+                <div class = "form-group">
+                    <label>BID: </label>
+                    <input type = "text" name = "bib" required>
+                </div>
+
+                <div class = "form-group">
+                    <label>Classification: </label>
+                    <input type = "text" name ="classification" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Country: </label>
+                    <input type="text" name="country" required>
+                </div>
+
+                <div class = "form-group">
+                    <label>FirstName: </label>
+                    <input type="text" name="first_name" required>
+                </div>
+
+                <div class = "form-group">
+                    <label>Surname: </label>
+                    <input type="text" name="surname" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender: </label>
+                    <select name="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date of Birth: </label>
+                    <input type="date" name="date_of_birth" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email (Optional): </label>
+                    <input type="email" name="email">
+                </div>
+
+                <div class="form-btns">
+                    <button type="button" id="quitAdd">Quit</button>
+                    <div>
+                        <button type="submit" id="saveQuitBtn">Save & Quit</button>
+                    </div>
+                </div>
+            </form>
+        </div>   
+    </div>
+
         
     <!--
         This is the hidden form which will only show when athletes clicked 
@@ -179,7 +255,6 @@
 
     <!--JavaScript-->
     <script src="{% static 'js_file/athletes.js' %}"></script>
-    <script src="{% static 'js_file/athletes_select.js' %}"></script>
 
 </body>
 </html>

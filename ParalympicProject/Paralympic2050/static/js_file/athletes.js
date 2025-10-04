@@ -2,6 +2,40 @@ window.addEventListener("DOMContentLoaded", function () {
     const userImg = document.getElementById("user-img");
     const userMenu = document.getElementById("user-menu");
     const logoutBtn = document.getElementById("logout-btn");
+   
+    // When clicking the add athlete button
+    const addAthBtn = document.querySelector(".add-ath");
+    const addModal = document.getElementById("add-AthModal");
+    const quitAdd = document.getElementById("quitAdd");
+    const addForm = document.getElementById("AddAth-form");
+
+    if (addAthBtn && addModal){
+        addAthBtn.addEventListener("click", function (event){
+            event.preventDefault();
+            addModal.classList.remove("hidden");
+        });
+    }
+
+    if (quitAdd){
+        quitAdd.addEventListener("click", function(){
+            addModal.classList.add("hidden");
+        });
+    }
+
+    addModal.addEventListener("click", function(event){
+        if (event.target === addModal){
+            addModal.classList.add("hidden");
+        }
+    });
+
+    // This method will prevent multiple submissions of the forms
+    addForm.addEventListener("submit", function(e) {
+        if (this.dataset.submitted) {
+            e.preventDefault();
+            return false;
+        }
+        this.dataset.submitted = true;
+    });
 
     // This is for selecting the athlete
     /*
@@ -220,10 +254,17 @@ window.addEventListener("DOMContentLoaded", function () {
             const confirmDelete = confirm("Are you sure you want to delete this athlete?");
             if (!confirmDelete) {
                 event.preventDefault(); 
+                return;
             }
+
+            const athleteId = form.querySelector("input[name='athlete_id']").value;
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "delete_ids";
+            input.value = athleteId;
+            form.appendChild(input);
         });
     });
-
 });
 
 

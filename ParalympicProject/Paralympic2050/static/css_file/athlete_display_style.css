@@ -392,9 +392,28 @@ body {
     max-width: 900px;
 }
 
-.search-filter form{
+.search-filter form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 15px;
     width: 100%;
+}
+
+.search-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex: 1; 
+}
+
+.ath-selection {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto;  
+    position: relative; 
 }
 
 .search-filter input[type="text"] {
@@ -509,11 +528,125 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.form-buttons button[type="button"] { /*THE back button*/
+.form-buttons button[type="button"] {
     background: #a31e1c;
     color: #fff;
 }
-.form-buttons button[type="submit"] { /*The submit button*/
+.form-buttons button[type="submit"] { 
     background: #28a745;
     color: #fff;
+}
+
+/*
+    This is the add athlete form CSS
+*/
+
+#add-AthModal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.add-ath-cont {
+    background-color: #2b3665;
+    padding: 25px 40px;
+    border-radius: 6px;
+    width: 660px;
+    max-width: 90%;
+    color: white;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.add-ath-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #001866;
+    background-color: #aeaeae;
+    padding: 20px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin: -25px -40px 20px -40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-ath-title::after {
+    content: "";
+    width: 80px;
+    height: 10px;
+    background: linear-gradient(to right, red, blue, green);
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.add-ath-cont label {
+    display: inline-block;
+    width: 140px;
+    margin-right: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.add-ath-cont input,
+.add-ath-cont select {
+    width: 220px;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.form-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.form-btns button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#quitAdd {
+    background: #bc2a2a;
+    color: white;
+}
+
+#quitAdd:hover {
+    opacity: 0.8;
+}
+
+#saveBtn {
+    background: #007bff;
+    color: white;
+}
+
+#saveQuitBtn {
+    background: #001866;
+    color: white;
+}
+
+#saveBtn:hover,
+#saveQuitBtn:hover {
+    opacity: 0.8;
 }

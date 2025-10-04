@@ -4,7 +4,7 @@ from django.db import models
 ## I rename this model to athletes (you will see it in postgreSQL)
 class Athletes(models.Model):
     bid = models.IntegerField()
-    country = models.CharField(max_length=5)
+    country = models.CharField(max_length=100)
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
     gender = models.CharField(max_length=10)

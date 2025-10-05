@@ -14,6 +14,10 @@ import json
 from django.contrib.auth import authenticate, logout, login
 from django.http import JsonResponse
 from django.db.models import Q ### I think this is for the query
+import sys, os
+
+###### importing the external pages
+from .Django_external_views.homepage_view import HomePage
 
 ############## Register page
 class RegisterPage(View): #### This is like GET and POST method in HTML forms handling
@@ -68,6 +72,7 @@ class LoginPage(View):
                 "not_exist": True,           
                 "enter_user": username
             }
+            #### Failed to login, return to the same page
             return render(request, "Registering/login.html", datas)
 
         try:
@@ -87,7 +92,7 @@ class LoginPage(View):
         #### stored inside the session variable (it can be called in any page)
         request.session['logged_in_user'] = user.username
         
-        return redirect("Paralympic2050:athletes")
+        return redirect("Paralympic2050:home") ### After login, go to the home page
 
 ########### Athlete display page
 class AthleteDisplay(ListView):
@@ -117,11 +122,11 @@ class AthleteDisplay(ListView):
 class AthleteDisplay(ListView):
     temp = "Displaying/Athletes_display.html"
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs): #### This will works for search and filter in django
         key = request.GET.get("keyword", "").strip()
         gender = request.GET.get("gender", "").strip()
 
-        athletes = Athletes.objects.all().order_by('firstName', 'lastName')  # Alphabetical sorting
+        athletes = Athletes.objects.all().order_by("firstName", "lastName")  # Alphabetical sorting
 
         if key:
            athletes = athletes.filter(
@@ -200,4 +205,11 @@ class LogoutView(View):
         print("After logout: {}".format(request.session.get('logged_in_user')))
             
         return JsonResponse({"status": "logged out"})
-    
+
+###### Homepage, this page is actually inside another folder.
+### This is just an class instance (the real homepage is in Django_exteral_veiws)
+class Home2(View):
+    def get(self, request, *args, **kwargs):
+        homepage = HomePage()
+        return homepage.get(request)
+

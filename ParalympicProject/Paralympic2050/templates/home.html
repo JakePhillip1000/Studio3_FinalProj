@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% extends "menu.html" %}
+        {% block title %}Paralympic2050 (Homepage){% endblock %}
+
+        {% block content %}
+        {% load static %}
+
+        {% block css_style %}
+            <link rel="stylesheet" href="{% static 'css_file/home.css' %}?v=1.0">
+        {% endblock %}
+    </head>
+
+<body>
+    <!--The homepage video-->
+    <section class = "video-section">
+        <video class="video-play" autoplay loop muted>
+            <source src="{% static 'img/videos/Homepage_video.mp4' %}" type="video/mp4">
+        </video>
+    </section>
+
+    <section>
+        asdasd
+    </section>
+
+    <script src="{% static 'js_file/home.js' %}"></script>
+    {% endblock %}
+</body>
+</html>

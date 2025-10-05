@@ -1,3 +1,6 @@
+/*
+    The heading part, this should be inside every HTML pages
+*/
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -73,7 +76,11 @@ body {
     text-decoration: none;
     color: white;
 }
-  
+
+
+/*
+The athletes container and datasets
+*/
 .athletes-container {
     display: flex;
     flex-wrap: wrap;

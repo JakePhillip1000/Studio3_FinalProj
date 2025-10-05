@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Paralympic2050{% endblock %}</title>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css_file/menu.css' %}?v=1.0">
+    <link rel="icon" type="image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="head">
+        <div class="head-left">
+            <div class="logo-div">
+                <img src="{% static 'img/login_register_img/IPC_logo2white.png' %}" alt="Paralympic Logo" width="300px">
+            </div>
+            <nav class="nav-links">
+                <a href="{% url 'Paralympic2050:home' %}">Home</a>
+                <a href="#">Results</a>
+                <a href="#">Shop</a>
+                <a href="#">About Paralympics</a>
+                <a href="#">Book a ticket</a>
+                <a href="#">Managements</a>
+            </nav>
+        </div>
+
+        <div class="username-div">
+            <span class="username-text">
+                {% if request.session.logged_in_user %}
+                    {{ request.session.logged_in_user }}
+                {% else %}
+                    Guest
+                {% endif %}
+            </span>
+            <img id="user-img" src="{% static 'img/login_register_img/UserW.png' %}" alt="User" width="90px">
+
+            <!-- User menu -->
+            <div id="user-menu" class="user-menu" style="display:none;">
+                <ul>
+                    {% if request.session.logged_in_user %}
+                        <li id="logout-btn">Logout</li>
+                        <li id="change-pic-btn">Change Profile Picture</li>
+                    {% else %}
+                        <li><a id="login-btn" href="{% url 'Paralympic2050:login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content block -->
+    {% block content %}{% endblock %}
+
+    <!-- JS file -->
+    <script src="{% static 'js_file/menu.js' %}?v=1.0"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -97,7 +97,6 @@ class LoginViewTests(TestCase):
         self.assertEqual(response.context['entered_username'], empty_username)
 
     def test_login_with_empty_password_string(self):
-        """Test POST request with an empty string for password."""
         empty_password = ""
         response = self.client.post('/login/', {
             'username': self.TEST_USERNAME, 

@@ -20,9 +20,41 @@
         </video>
     </section>
 
-    <section>
-        asdasd
+    <!--The recent news sections-->
+    <section class="recent-news">
+        <div class="news-text">
+            <p class="upcoming">Upcoming Game :</p>
+            <h1 class="event-title">MILANO CORTINA 2026</h1>
+            <h2 class="subtitle">Paralympic Winter Games</h2>
+            <a href="#" class="ticket-btn">Book a Ticket</a>
+        </div>
     </section>
+
+    <!--The news informations and images-->
+    <section class = "news-info">
+        <h1 class = "about-heading">About the Paralympic Game</h1>
+        <div class = "event-container">
+            <div class = "event-text">
+                <h2>MILANO CORTINA 2026</h2>
+                <p>
+                    Milano Cortina 2026 is a paralympic winter game which will open
+                    on the 6<sup>th</sup> of March 2026 in the Arena di Verona.
+                    This game will take place in Italy with more than 600 athletes 
+                    competiting in 79 medal events across 6 sports. The 6 sports include
+                    Para alpine skiing, Para biathlon, Para cross-country skiing, Para ice hockey, 
+                    Para snowboard, and wheelchair curling. <br/><br/>
+
+                    For more information, please visit:<br/>
+                    <a class = "more-info-link" href = "https://www.paralympic.org/milano-cortina-2026/mascot">"https://www.paralympic.org/milano-cortina-2026/mascot"</a>
+                </p>
+                <a href = "#" class ="read-more">Read More</a> 
+            </div>
+            <div class = "event-image">
+                <img src="{% static 'img/banner_img/Milano_cortina.png' %}" alt="Milano Cortina 2026">
+            </div>
+        </div>
+    </section>
+
 
     <script src="{% static 'js_file/home.js' %}"></script>
     {% endblock %}

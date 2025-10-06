@@ -24,7 +24,13 @@
                 <a href="#">Shop</a>
                 <a href="#">About Paralympics</a>
                 <a href="#">Book a ticket</a>
-                <a href="#">Managements</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Managements ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">Event Management</a>
+                        <a href="{% url 'Paralympic2050:athletes' %}">Athletes Data Management</a>
+                    </div>
+                </div>
             </nav>
         </div>
 

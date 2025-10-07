@@ -9,7 +9,7 @@ gainNode.connect(audioContext.destination);
 
 gainNode.gain.value = 1.0;
 
-document.addEventListener("click", function () {
+video.addEventListener("click", function () {
     if (video.muted) {
         video.muted = false;
         audioContext.resume();

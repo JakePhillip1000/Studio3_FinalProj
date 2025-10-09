@@ -3,7 +3,10 @@ window.addEventListener("DOMContentLoaded", function () {
     const userMenu = document.getElementById("user-menu");
     const logoutBtn = document.getElementById("logout-btn");
    
-    // When clicking the add athlete button
+    /*
+    When clicked the athletes button (add Athlete), this will make
+    the form appear (we will disabled from the hidden state)
+    */
     const addAthBtn = document.querySelector(".add-ath");
     const addModal = document.getElementById("add-AthModal");
     const quitAdd = document.getElementById("quitAdd");

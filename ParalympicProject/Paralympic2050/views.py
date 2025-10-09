@@ -16,6 +16,10 @@ from django.http import JsonResponse
 from django.db.models import Q ### I think this is for the query
 import sys, os
 
+######## (This is how to get the latest version of code in github)
+####### git fetch origin
+######## git reset --hard origin/main
+
 ###### importing the external pages
 from .Django_external_views.homepage_view import HomePage
 

@@ -28,3 +28,24 @@ class UserData(models.Model):  #### This one will automatically turns into the f
         db_table  = "userdatas"
         verbose_name = "userdata"
         verbose_name_plural = "userdatas" 
+
+##### IN the event management I will use each model to represent
+#### each event hosted... These will be put into the postgreSQL database
+class Event(models.Model):
+    date_time = models.DateTimeField(verbose_name="Date and Time")
+    number = models.CharField(max_length=10, verbose_name="Event No.")
+    gender = models.CharField(max_length=10)
+    sport = models.CharField(max_length=100)
+    classification = models.CharField(max_length=10)
+    phrase = models.CharField(max_length=20)
+    status = models.CharField(max_length=20)
+    location = models.CharField(max_length=255, null=True, blank=True) # <-- เพิ่มบรรทัดนี้
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["date_time"]
+        db_table  = "sport_events"
+        verbose_name = "sport_event"
+        verbose_name_plural = "sport_events"

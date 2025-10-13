@@ -82,7 +82,7 @@ def upload_data(path):
     print(f"UPLOADING: {len(athletes_ls)}")
 
 if __name__ == "__main__":
-    path_csv = "C:/Users/ACE/OneDrive/Studio3_FinalProj/ParalympicProject/Paralympic2050/csv_files/Athlests.member.csv"
+    path_csv = "D:/OneDrive/Studio3_FinalProj/ParalympicProject/Paralympic2050/csv_files/Athlests.member.csv"
     upload_data(path=path_csv)
 
-    #upload_data("C:/Users/ACE/OneDrive/Studio3_FinalProj/ParalympicProject/Paralympic2050/csv_files/Athlests.member.csv")
+    #upload_data("D:/OneDrive/Studio3_FinalProj/ParalympicProject/Paralympic2050/csv_files/Athlests.member.csv")

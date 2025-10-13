@@ -463,14 +463,14 @@ The athletes container and datasets
     font-weight: bold;
     border: none;
     border-radius: 6px;
-    background: #ff4757; 
+    background: #2e2fa1; 
     color: white;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .search-filter .search:hover {
-    background: #e63946;
+    background: #291e6d;
     transform: scale(1.05);
 }
 

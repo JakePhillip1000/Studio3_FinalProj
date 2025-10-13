@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Athletes, UserData
+from .models import Event
 
 '''
 username: admin
@@ -17,3 +18,10 @@ class AthletesAdmin(admin.ModelAdmin):
 @admin.register(UserData)
 class UserDataAdmin(admin.ModelAdmin):
     display = ("username", "password")
+
+##### This one is the event model (event management)
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ("number", "gender", "sport", "classification", "phrase", "status", "date_time")
+    list_filter = ("status", "gender", "phrase")
+    search_fields = ("number", "sport", "classification")

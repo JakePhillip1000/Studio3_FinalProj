@@ -217,3 +217,6 @@ class Home2(View):
         homepage = HomePage()
         return homepage.get(request)
 
+###### This is the end of the code of the views.py
+#### For further, I've created a external view in Django_external_views folder
+

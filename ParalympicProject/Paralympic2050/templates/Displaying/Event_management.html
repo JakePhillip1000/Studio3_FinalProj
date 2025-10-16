@@ -19,13 +19,17 @@
     </section>
 
     <!--Search section and buttons-->
-    <section class = "search-add">
-        <form method = "GET">
-            <input type = "text" placeholder = "Search Team" name = "q">
-            <button class = "search-btn" type = "submit">Search</button>
+    <section class="search-add">
+        <form method="GET">
+            <input 
+                type="text" 
+                placeholder="Search Event (Number or Sport)" 
+                name="q" 
+                value="{{ query|default:'' }}">  <!-- Keep search value -->
+            <button class="search-btn" type="submit">Search</button>
         </form>
 
-        <button class = "add-event-btn">Add Event</button>
+        <button class="add-event-btn">Add Event</button>
     </section>
 
     <!--
@@ -140,9 +144,12 @@
 
                     <label>Location :</label>
                     <div class="location-wrapper">
-                        <input type="text" placeholder="Select the location" name="location">
-                        <img src="{% static 'img/banner_img/google_map.png' %}" alt="map icon" class="input-icon">
+                        <input type="text" placeholder="Select the location" id="location-input" name="location" readonly required>
+                        <div id="map" style="width: 100%; height: 300px; margin-top: 10px;"></div>
                     </div>
+
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+                    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
                     <div class="form-buttons">
                         <button type="button" class="form-btn quit-btn">Quit</button>
@@ -156,6 +163,10 @@
 
     <!--JavaScript file path and endblock content-->
     <script src="{% static 'js_file/Event_management.js' %}"></script>
+    
+    <!--Load the google map API-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap" async defer></script>
+
     {% endblock %}
 </body>
 </html>

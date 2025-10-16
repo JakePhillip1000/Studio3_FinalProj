@@ -20,8 +20,23 @@ class EventManagement(View):
     file_name = "Displaying/Event_management.html"
     
     def get(self, request, *args, **kwargs):
+        #### THis part is the search query. I will filtered it out by
+        ##### the query sport and number
+        search_query = request.GET.get("q")
         events = Event.objects.all().order_by("date_time")
-        return render(request, self.file_name, {"events": events})
+        
+        if search_query:
+            events = events.filter(
+                Q(number__icontains=search_query) | Q(sport__icontains=search_query)
+            )
+        
+        ev_query = {
+            "events": events,
+            "query": search_query,
+        }
+
+        events = Event.objects.all().order_by("date_time")
+        return render(request, self.file_name, ev_query)
 
     def post(self, request, *args, **kwargs):
         ### This part is for delete the event (delete from ID)

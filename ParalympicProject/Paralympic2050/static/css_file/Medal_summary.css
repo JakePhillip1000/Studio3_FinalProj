@@ -1,3 +1,218 @@
-body{
-    background-color: red;
+.banner h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.gold-text { 
+    color: rgb(206, 154, 23);
+ }
+ 
+.search-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px; 
+    gap: 15px;
+    margin-top: 0;
+    background-color: #f3f3f3; 
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-left: 20px; margin-right: 20px;
+}
+
+.search-add input[type="text"] {
+    flex: 3; 
+    padding: 14px 16px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.search-add .search-btn {
+    background-color: #261da1;
+    color: white;
+    font-weight: bold;
+    padding: 14px 28px; 
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-add .search-btn:hover {
+    background-color: #1c0d5e;
+}
+
+.search-add .add-team-btn {
+    background-color: #B53D24;
+    color: white;
+    font-weight: bold;
+    padding: 14px 28px; 
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-add .add-team-btn:hover {
+    background-color: #932f1c;
+}
+
+.medal-table table { 
+    width: 100%; 
+    border-collapse: collapse;
+ }
+
+.medal-table th, .medal-table td { 
+    padding: 10px; 
+    text-align: center; 
+    border-bottom: 1px solid #ccc;
+ }
+
+.popup-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: rgba(0,0,0,0.6); 
+    display: none; 
+    align-items: center; 
+    justify-content: center;
+ }
+
+.popup-form { 
+    background :#fff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    width: 300px;
+ }
+
+.form-buttons { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 15px;
+ }
+
+.popup-overlay {
+    display: none; 
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+
+.popup-form {
+    background-color: #1c2a5e;
+    color: white;
+    width: 500px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    font-family: "Segoe UI", sans-serif;
+}
+
+.popup-form h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px 15px;
+    align-items: center;
+}
+
+.form-grid label {
+    font-weight: 500;
+    text-align: right;
+    font-size: 15px;
+    padding-right: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid input[type="date"],
+.form-grid input[type="time"],
+.form-grid select {
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.save-buttons-group {
+    display: flex;
+    gap: 10px;
+}
+
+.form-btn {
+    background-color: white;
+    color: #1c2a5e;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.location-wrapper {
+    grid-column: 1 / -1;
+    position: relative;
+}
+
+.location-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.location-wrapper .input-icon {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.location-wrapper::after {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
 }

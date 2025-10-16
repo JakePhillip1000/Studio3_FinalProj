@@ -49,3 +49,19 @@ class Event(models.Model):
         db_table  = "sport_events"
         verbose_name = "sport_event"
         verbose_name_plural = "sport_events"
+
+##### THis one is the Medals model which collects the data of team name
+#### gold, silver and bronze medal
+class Medal(models.Model):
+    team = models.CharField(max_length=100)
+    gold = models.PositiveIntegerField(default=0)
+    silver = models.PositiveIntegerField(default=0)
+    bronze = models.PositiveIntegerField(default=0)
+    total = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        db_table = "medal_summary"   
+        verbose_name = "medal"      
+        verbose_name_plural = "medals"  
+
+        

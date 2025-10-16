@@ -8,7 +8,7 @@
         {% load static %}
 
         {% block css_style %}
-            <link rel="stylesheet" href="{% static 'css_file/Event_management.css' %}?v=1.0">
+            <link rel="stylesheet" href="{% static 'css_file/Medal_summary.css' %}?v=1.0">
         {% endblock %}
     </head>
 
@@ -18,9 +18,101 @@
         <img src="{% static 'img/banner_img/Md_display.png' %}" alt="Paralympic Logo" width="100%">
     </section>
 
+    <!--Searchbar and add team button-->
+    <section class = "search-add">
+        <form method="GET">
+            <input type="text" name="q" placeholder="Search Team" value="{{ query|default:'' }}">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+        <button class = "add-team-btn">Add team</button>
+    </section>
 
-    <!--JavaScript file path and endblock content-->
+    <section class="medal-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Gold</th>
+                    <th>Silver</th>
+                    <th>Bronze</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for medal in medals %}
+                <tr>
+                    <td>{{ medal.team }}</td>
+                    <td>{{ medal.gold }}</td>
+                    <td>{{ medal.silver }}</td>
+                    <td>{{ medal.bronze }}</td>
+                    <td>{{ medal.total }}</td>
+
+                    <td>
+                        <button class="view-details">
+                            <img src="{% static 'img/banner_img/group.png' %}" alt="View Details" width="35" height="35">
+                        </button>
+
+                        <button class="edit-event"
+                            data-id="{{ medal.id }}"
+                            data-team="{{ medal.team }}"
+                            data-gold="{{ medal.gold }}"
+                            data-silver="{{ medal.silver }}"
+                            data-bronze="{{ medal.bronze }}">
+                            <img src="{% static 'img/banner_img/composed.png' %}" alt="Edit Event" width="35" height="35">
+                        </button>
+
+                        <form method="POST" action="{% url 'Paralympic2050:event' %}" class="delete-event-form" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="event-id" value="{{ medal.id }}">
+                            <button type="submit" class="delete-event">
+                                <img src="{% static 'img/banner_img/trashR2.png' %}" alt="Delete Event" width="35" height="35">
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="no-data">Not yet</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-form">
+            <h2 id="form-title">Add Team</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="team-id" id="team-id">
+                <div class="form-grid">
+                    <label for="team-name">Team Name:</label>
+                    <input type="text" name="team-name" id="team-name" required>
+
+                    <label for="gold">Gold:</label>
+                    <input type="text" name="gold" id="gold" min="0" value="0" required>
+
+                    <label for="silver">Silver:</label>
+                    <input type="text" name="silver" id="silver" min="0" value="0" required>
+
+                    <label for="bronze">Bronze:</label>
+                    <input type="text" name="bronze" id="bronze" min="0" value="0" required>
+
+                    <label for="total">Total:</label>
+                    <input type="text" id="total" readonly>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="form-btn quit-btn">Quit</button>
+                    <button type="submit" class="form-btn save-btn">Save & Quit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Load JS at the bottom -->
     <script src="{% static 'js_file/Medal_summary.js' %}"></script>
+
     {% endblock %}
 </body>
 </html>

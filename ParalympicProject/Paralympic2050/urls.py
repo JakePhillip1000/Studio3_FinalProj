@@ -6,6 +6,7 @@ from .views import RegisterPage, LoginPage, AthleteDisplay, LogoutView
 #### import the external pages
 from .Django_external_views.homepage_view import HomePage
 from .Django_external_views.Event_manage_view import EventManagement
+from .Django_external_views.Medal_summary_view import MedalSummary
 
 #### Application name
 app_name = "Paralympic2050"
@@ -19,6 +20,7 @@ urlpatterns = [
     path("login/", LoginPage.as_view(), name="login"),
     path("athletes/", AthleteDisplay.as_view(), name="athletes"),
     path("event/", EventManagement.as_view(), name = "event"),
+    path("medals/", MedalSummary.as_view(), name = "medals"),
 
     ### logout reloading
     path("logout/", LogoutView.as_view(), name="logout"),

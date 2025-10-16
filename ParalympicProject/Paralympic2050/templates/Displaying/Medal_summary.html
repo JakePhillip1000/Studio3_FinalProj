@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% extends "menu.html" %}
+        {% block title %}Paralympic2050 (Event manage){% endblock %}
+
+        {% block content %}
+        {% load static %}
+
+        {% block css_style %}
+            <link rel="stylesheet" href="{% static 'css_file/Event_management.css' %}?v=1.0">
+        {% endblock %}
+    </head>
+
+<body>
+    <!--Banner displaying-->
+    <section class = "banner">
+        <img src="{% static 'img/banner_img/Md_display.png' %}" alt="Paralympic Logo" width="100%">
+    </section>
+
+
+    <!--JavaScript file path and endblock content-->
+    <script src="{% static 'js_file/Medal_summary.js' %}"></script>
+    {% endblock %}
+</body>
+</html>

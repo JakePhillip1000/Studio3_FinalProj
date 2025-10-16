@@ -67,8 +67,20 @@
                             <button class="view-details">
                                 <img src="{% static 'img/banner_img/group.png' %}" alt="View Details" width="35" height="35">
                             </button>
+                            
+                            <!-- This will contains the event that I browse-->
+                            <button class="edit-event"
+                                data-id="{{ event.id }}"
+                                data-date="{{ event.date_time|date:'Y-m-d' }}"
+                                data-time="{{ event.date_time|date:'H:i' }}"
+                                data-number="{{ event.number }}"
+                                data-sport="{{ event.sport }}"
+                                data-gender="{{ event.gender }}"
+                                data-classification="{{ event.classification }}"
+                                data-phrase="{{ event.phrase }}"
+                                data-status="{{ event.status }}"
+                                data-location="{{ event.location }}">
 
-                            <button class="edit-event">
                                 <img src="{% static 'img/banner_img/composed.png' %}" alt="Edit Event" width="35" height="35">
                             </button>
 
@@ -102,6 +114,8 @@
                 <hr/>
                 <form id="addEventForm" class="form-grid" method="POST" action="{% url 'Paralympic2050:event' %}">
                     {% csrf_token %}
+
+                    <input type="hidden" id="event-id" name="event-id">
 
                     <label for="event-date">Competition Date:</label>
                     <input type="date" id="event-date" name="event-date" required>

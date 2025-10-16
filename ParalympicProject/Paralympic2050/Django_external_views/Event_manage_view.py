@@ -39,14 +39,8 @@ class EventManagement(View):
         return render(request, self.file_name, ev_query)
 
     def post(self, request, *args, **kwargs):
-        ### This part is for delete the event (delete from ID)
-        event_id = request.POST.get("event-id") ### this one is the hidden field containg id
-        if event_id:
-            event = Event.objects.get(id=event_id)
-            event.delete()
+        event_id = request.POST.get("event-id") 
 
-        ##### This method will get all the datas form the 
-        ### HTML using 'name' inside the form attr.
         date = request.POST.get("event-date")
         number = request.POST.get("event-number")
         time = request.POST.get("event-time")
@@ -57,23 +51,48 @@ class EventManagement(View):
         status = request.POST.get("event-status")
         location = request.POST.get("location")
 
+        if request.POST.get("event-id") and not (date and time and sport):
+            try:
+                event = Event.objects.get(id=event_id)
+                event.delete()
+                messages.success(request, "Event deleted successfully.")
+            except Event.DoesNotExist:
+                messages.error(request, "Event not found for deletion.")
+            return redirect("Paralympic2050:event")
+        
         if date and time and sport and gender and classification:
             date_time_str = f"{date} {time}"
             date_time = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M")
 
-            Event.objects.create(
-                date_time=date_time,
-                number = number,
-                sport=sport,
-                gender=gender,
-                classification=classification,
-                phrase=phrase,
-                status=status,
-                location=location,
-            )
-            messages.success(request, "Add event succcessfully")
+            if event_id:
+                try:
+                    event = Event.objects.get(id=event_id)
+                    event.date_time = date_time
+                    event.number = number
+                    event.sport = sport
+                    event.gender = gender
+                    event.classification = classification
+                    event.phrase = phrase
+                    event.status = status
+                    event.location = location
+                    event.save()
+                    messages.success(request, "Event updated successfully.")
+                except Event.DoesNotExist:
+                    messages.error(request, "Event dont found")
+            else:
+                Event.objects.create(
+                    date_time=date_time,
+                    number=number,
+                    sport=sport,
+                    gender=gender,
+                    classification=classification,
+                    phrase=phrase,
+                    status=status,
+                    location=location,
+                )
+                messages.success(request, "Event added successfully.")
         else:
-            messages.error(request, "Event forms not completely filled")
+            messages.error(request, "Please fill all required event fields.")
 
         return redirect("Paralympic2050:event")
 

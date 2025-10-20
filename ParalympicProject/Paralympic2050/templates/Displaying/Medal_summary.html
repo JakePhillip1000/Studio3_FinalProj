@@ -2,7 +2,7 @@
 <html>
     <head>
         {% extends "menu.html" %}
-        {% block title %}Paralympic2050 (Event manage){% endblock %}
+        {% block title %}Paralympic2050 (Medal Summary){% endblock %}
 
         {% block content %}
         {% load static %}
@@ -61,8 +61,9 @@
                             data-bronze="{{ medal.bronze }}">
                             <img src="{% static 'img/banner_img/composed.png' %}" alt="Edit Event" width="35" height="35">
                         </button>
-
-                        <form method="POST" action="{% url 'Paralympic2050:event' %}" class="delete-event-form" style="display:inline;">
+                        
+                        <!--For the delete team-->
+                        <form method="POST" action="{% url 'Paralympic2050:medals' %}" class="delete-event-form" style="display:inline;">
                             {% csrf_token %}
                             <input type="hidden" name="event-id" value="{{ medal.id }}">
                             <button type="submit" class="delete-event">
@@ -116,3 +117,4 @@
     {% endblock %}
 </body>
 </html>
+

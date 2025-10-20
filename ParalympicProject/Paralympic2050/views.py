@@ -33,6 +33,16 @@ class RegisterPage(View): #### This is like GET and POST method in HTML forms ha
         password = request.POST.get("password")
         conpass = request.POST.get("conpass")
 
+        ##### I have created the admin account
+        #### This method will prevetnt from registering into admin account
+        if username.lower() == "admin":
+            return render(request, "Registering/register.html", {
+                "username_taken": True,
+                "taken_username": username,
+                "reserved_name": True,
+                "err": "DO NOT USE THE ADMIN ACCOUNT"  
+            })
+
         ### Already exist username
         if UserData.objects.filter(username=username).exists():
             data = {
@@ -95,6 +105,12 @@ class LoginPage(View):
         
         #### stored inside the session variable (it can be called in any page)
         request.session['logged_in_user'] = user.username
+
+        #### Admin account and permission
+        if username.lower() == "admin":
+            request.session["is_admin"] = True
+        else:
+            request.session["is_admin"] = False
         
         return redirect("Paralympic2050:home") ### After login, go to the home page
 

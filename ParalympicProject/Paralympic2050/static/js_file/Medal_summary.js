@@ -42,4 +42,41 @@ document.addEventListener("DOMContentLoaded", function() {
         total.value = 0;
         teamId.value = "";
     }
+
+    document.querySelector("form").addEventListener("submit", function() {
+        document.getElementById("popupOverlay").style.display = "none";
+    });
+    
+    // Deleting the team
+    const deleteForms = document.querySelectorAll(".delete-event-form");
+    deleteForms.forEach(function(form) {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); 
+
+            const deleteForm = confirm("Are you sure you want to delete this team?");
+            if (deleteForm) {
+                form.submit(); 
+            }
+        });
+    });
+
+        const edit_event = document.querySelectorAll(".edit-event");
+        edit_event.forEach(function(btn){
+        btn.addEventListener("click", function() {
+            const id = btn.dataset.id;
+            const team = btn.dataset.team;
+            const goldVal = btn.dataset.gold;
+            const silverVal = btn.dataset.silver;
+            const bronzeVal = btn.dataset.bronze;
+
+            document.getElementById("team-id").value = id;
+            document.getElementById("team-name").value = team;
+            document.getElementById("gold").value = goldVal;
+            document.getElementById("silver").value = silverVal;
+            document.getElementById("bronze").value = bronzeVal;
+            document.getElementById("total").value = Number(goldVal) + Number(silverVal) + Number(bronzeVal);
+            
+            document.getElementById("popupOverlay").style.display = "flex";
+        });
+    });
 });

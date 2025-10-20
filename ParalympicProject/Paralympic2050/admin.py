@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Athletes, UserData
-from .models import Event
+from .models import Athletes, UserData, Event
 
 '''
 username: admin

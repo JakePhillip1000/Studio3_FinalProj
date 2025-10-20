@@ -80,6 +80,8 @@ class EventManagement(View):
                 except Event.DoesNotExist:
                     messages.error(request, "Event dont found")
             else:
+                ###### This method, we will create the objects for the event data
+                #### This wil be used on the backend side (can manage using postgreSQL)
                 Event.objects.create(
                     date_time=date_time,
                     number=number,

@@ -161,6 +161,11 @@ class AthleteDisplay(ListView):
     
         
     def post(self, request, *args, **kwargs):
+        #### Check whether the user is admin or not
+        if request.session.get("logged_in_user") != "admin":
+            messages.error("No permission to edit, delete and add")
+            return redirect("Paralympic2050:athletes")
+
         #### Delete selected athletes 
         delete_ids = request.POST.getlist("delete_ids")
 

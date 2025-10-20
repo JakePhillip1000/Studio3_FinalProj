@@ -29,7 +29,9 @@
             <button class="search-btn" type="submit">Search</button>
         </form>
 
-        <button class="add-event-btn">Add Event</button>
+        {% if request.session.logged_in_user == "admin" %}
+            <button class="add-event-btn">Add Event</button>
+        {% endif %}
     </section>
 
     <!--
@@ -49,7 +51,11 @@
                         <th>Classification</th>
                         <th>Phase</th>
                         <th>Status</th>
-                        <th>Action</th>
+
+                        <!-- IF not admin, the user cannot see the action column-->
+                        {% if request.session.logged_in_user == "admin" %}
+                            <th>Action</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -64,9 +70,10 @@
                         <td>{{ event.status }}</td>
 
                         <td>
-                            <button class="view-details">
-                                <img src="{% static 'img/banner_img/group.png' %}" alt="View Details" width="35" height="35">
-                            </button>
+                            {% if request.session.logged_in_user == "admin" %}
+                                <button class="view-details">
+                                    <img src="{% static 'img/banner_img/group.png' %}" alt="View Details" width="35" height="35">
+                                </button>
                             
                             <!-- This will contains the event that I browse-->
                             <button class="edit-event"
@@ -93,6 +100,7 @@
                                     <img src="{% static 'img/banner_img/trashR2.png' %}" alt="Delete Event" width="35" height="35">
                                 </button>
                             </form>
+                            {% endif %}
                         </td>
 
                     </tr>

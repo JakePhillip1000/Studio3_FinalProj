@@ -39,6 +39,11 @@ class EventManagement(View):
         return render(request, self.file_name, ev_query)
 
     def post(self, request, *args, **kwargs):
+        ### Check whether the user is admin or not
+        if request.session.get("logged_in_user") != "admin":
+            messages.error(request, "You have no permission")
+            return redirect("Paralympic2050:event")
+        
         event_id = request.POST.get("event-id") 
 
         date = request.POST.get("event-date")

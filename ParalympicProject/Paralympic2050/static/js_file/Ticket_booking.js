@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                 } 
                 else {
-                    input.value = val ue;
+                    input.value = value;
                 }
             }
         });

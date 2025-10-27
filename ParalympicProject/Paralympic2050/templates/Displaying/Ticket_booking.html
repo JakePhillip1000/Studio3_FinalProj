@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% extends "menu.html" %}
+        {% block title %}Paralympic2050 (Ticket Booking){% endblock %}
+
+        {% block content %}
+        {% load static %}
+
+        {% block css_style %}
+            <link rel="stylesheet" href="{% static 'css_file/Ticket_booking.css' %}?v=1.0">
+        {% endblock %}
+    </head>
+
+<body>
+    <!--Banner displaying-->
+    <section class = "banner">
+        <img src="{% static 'img/banner_img/TB_title.png' %}" alt="Paralympic Logo" width="100%">
+    </section>
+
+    <section class = "ticket-header">
+        <p>
+            - Some sessions might be temporary unavailable for sale: Check for updates on the page. <br/>
+            - In December 2050, you will be able to download the ticket app. 
+            to access your digital tickets. Through the app, you can also change attendee names.<br/>
+            - Seats will be assigned in December 2050, and the QR code for entry will be
+            available in the app 24 hours before the sessions start.<br/>
+        </p>
+    </section>
+
+    <section class="filter-section">
+        <button class="filter-btn">Filter</button>
+
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+        <p class="available-text">Available to book only</p>
+    </section>
+
+
+    <!-- Filter form. This will appear only when clicked the filter button -->
+    <section>
+        <div id="filterModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Filter</h2>
+                    </div>
+                    <hr/>
+
+                    <form id="filterForm" method="GET">
+                        <div class="form-group">
+                            <label for="dateFrom">Date of Competition (From):</label>
+                            <input type="date" id="dateFrom" name="date_from">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dateTo">Date of Competition (To):</label>
+                            <input type="date" id="dateTo" name="date_to">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sport">Sport:</label>
+                            <input type="text" id="sport" name="sport" placeholder="Enter sport">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Gender:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="genderAll" name="gender" value="" checked>
+                                <label for="genderAll">All</label>
+                                
+                                <input type="radio" id="genderMale" name="gender" value="Male">
+                                <label for="genderMale">Male</label>
+                                
+                                <input type="radio" id="genderFemale" name="gender" value="Female">
+                                <label for="genderFemale">Female</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="classification">Classification:</label>
+                            <input type="text" id="classification" name="classification" placeholder="Enter classification">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" name="location" placeholder="Enter location">
+                        </div>
+                        
+                        <div class="modal-buttons">
+                            <button type="button" class="quit-btn">Quit</button>
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </section>
+
+    <!--This section will show all the events in db-->
+    <!--Every new event, the program will create new div element by the method of DTL for loop-->
+    <section class="event-list">
+
+        {% for event in events %}
+        <div class="event-card">
+            
+            <!--This will show all the events inside the database-->
+            <div class="event-info">
+                <span class="sport">{{ event.sport }}</span><br>
+                <span class="details">
+                    {{ event.gender }} | {{ event.classification }}<br>
+                    {{ event.date_time|date:"j M Y, g:i A" }} | {{ event.location }}
+                </span>
+            </div>
+
+            <!--
+            If the event is in progress, this will be available
+            However, if the event is cancelled or concluded, the user
+            cannot buy a ticket for that event
+            -->
+            {% if event.status == "In Progress" %}
+                <button class="ticket-btn">
+                    Ticket
+                </button>
+            {% else %}
+                <button class="not-available" disabled>Not Available</button>
+            {% endif %}
+        </div>  
+
+        <!--If there is no event inside the database-->
+        {% empty %}
+        <div class="no-event">There is no event available yet</div>
+
+        {% endfor %}
+    </section>
+
+    <!-- Load JS at the bottom -->
+    <script src="{% static 'js_file/Ticket_booking.js' %}"></script>
+
+    {% endblock %}
+</body>
+</html>
+

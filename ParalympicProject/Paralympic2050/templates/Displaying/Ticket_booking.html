@@ -97,12 +97,164 @@
             </div>
     </section>
 
+    <!--
+    This section is the ticket booking form. When clicked the ticket button, 
+    the event that not yet concluded, this will show the form
+    -->
+    <form method="POST" id="ticketForm" action="{% url 'Paralympic2050:ticket' %}">
+        {% csrf_token %}
+        <input type="hidden" name="event_id" id="currentEventId" value="">
+
+        <section class="ticket-modal-section">
+            <div class="ticket-modal" id="ticketModal">
+                <div class="ticket-content">
+                    <h2>Ticket Details</h2>
+                    <hr/>
+
+                    <h3>Category A</h3>
+                    <div class="ticket-row">
+                        <span>Full Price - Standard</span>
+                        <span class="price">50$</span>
+                        <input type="number" name="ticket_standard_A" min="0" value="0" data-price="50">
+                        <input type="hidden" name="price_standard_A" value="50">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Full Price - with disability/Impairment</span>
+                        <span class="price">40$</span>
+                        <input type="number" name="ticket_disability_A" min="0" value="0" data-price="40">
+                        <input type="hidden" name="price_disability_A" value="40">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Companion</span>
+                        <span class="price">35$</span>
+                        <input type="number" name="ticket_companion_A" min="0" value="0" data-price="35">
+                        <input type="hidden" name="price_companion_A" value="35">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Under 14</span>
+                        <span class="price">25$</span>
+                        <input type="number" name="ticket_under14_A" min="0" value="0" data-price="25">
+                        <input type="hidden" name="price_under14_A" value="25">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Under 14 with disability/Impairment</span>
+                        <span class="price">15$</span>
+                        <input type="number" name="ticket_under14_disability_A" min="0" value="0" data-price="15">
+                        <input type="hidden" name="price_under14_disability_A" value="15">
+                    </div>
+
+                    <h3>Category B</h3>
+                    <div class="ticket-row">
+                        <span>Full Price - Standard</span>
+                        <span class="price">40$</span>
+                        <input type="number" name="ticket_standard_B" min="0" value="0" data-price="40">
+                        <input type="hidden" name="price_standard_B" value="40">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Full Price - with disability/Impairment</span>
+                        <span class="price">30$</span>
+                        <input type="number" name="ticket_disability_B" min="0" value="0" data-price="30">
+                        <input type="hidden" name="price_disability_B" value="30">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Companion</span>
+                        <span class="price">28$</span>
+                        <input type="number" name="ticket_companion_B" min="0" value="0" data-price="28">
+                        <input type="hidden" name="price_companion_B" value="28">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Under 14</span>
+                        <span class="price">20$</span>
+                        <input type="number" name="ticket_under14_B" min="0" value="0" data-price="20">
+                        <input type="hidden" name="price_under14_B" value="20">
+                    </div>
+
+                    <div class="ticket-row">
+                        <span>Reduced Price - Under 14 with disability/Impairment</span>
+                        <span class="price">10$</span>
+                        <input type="number" name="ticket_under14_disability_B" min="0" value="0" data-price="10">
+                        <input type="hidden" name="price_under14_disability_B" value="10">
+                    </div>
+
+                    <div class="ticket-footer">
+                        <button type="button" class="back-btn">Back</button>
+                        <button type="button" class="book-btn">Book the Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+
+
+    <!--
+        When the user clicked book ticket inside the ticket details form. This should show
+        the ticket confirmation details
+    -->
+    <div class="ticket-modal" id="confirmationModal">
+        <div class="ticket-content">
+            <h2>Ticket Confirmation</h2>
+            <hr/>
+
+            <div id="confirmationDetails">
+                <!--
+                    This one, I will use JS to show it
+                -->
+            </div>
+
+            <div class="total-section">
+                <h3>Total</h3>
+
+                <div class="visa-input">
+                    <label>Visa: </label>
+                    <input type="text" id="visaInput" placeholder="Please Enter Your Visa" maxlength="16">
+                </div>
+
+                <div class="total-amount" id="confirmationTotal">0$</div>
+            </div>
+
+            <div class="ticket-footer">
+                <button class="back-btn" id="confirmBackBtn">Back</button>
+                <button class="confirm-btn" id="confirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticket-modal" id="transactionModal">
+        <div class="ticket-content">
+            <h2>Ticket Details</h2>
+            <hr/>
+
+            <h3 style="text-align: center; margin-bottom: 20px;">Ticket Confirmation</h3>
+            <hr style="margin-bottom: 20px;"/>
+
+            <h3 style="text-align: center; color: #57db76; margin-bottom: 30px;">Transaction Complete!</h3>
+
+            <div id="transactionDetails">
+                <!--
+                    For this one, I will note that it is initially hide and 
+                    I will use JS to show it
+                -->
+            </div>
+
+            <div class="ticket-footer" style="justify-content: center;">
+                <button class="continue-btn" id="continueBtn">Continue</button>
+            </div>
+        </div>
+    </div>
+
     <!--This section will show all the events in db-->
     <!--Every new event, the program will create new div element by the method of DTL for loop-->
     <section class="event-list">
 
         {% for event in events %}
-        <div class="event-card">
+        <div class="event-card" data-event-id="{{ event.id }}">
             
             <!--This will show all the events inside the database-->
             <div class="event-info">
@@ -118,12 +270,12 @@
             However, if the event is cancelled or concluded, the user
             cannot buy a ticket for that event
             -->
-            {% if event.status == "In Progress" %}
-                <button class="ticket-btn">
-                    Ticket
-                </button>
-            {% else %}
-                <button class="not-available" disabled>Not Available</button>
+            {% if request.session.logged_in_user %}
+                {% if event.status == "In Progress" %}
+                    <button class="ticket-btn">Ticket</button>
+                {% else %}
+                    <button class="not-available-btn" disabled>Not<br/>Available</button>
+                {% endif %}
             {% endif %}
         </div>  
 
@@ -140,4 +292,3 @@
     {% endblock %}
 </body>
 </html>
-

@@ -64,4 +64,18 @@ class Medal(models.Model):
         verbose_name = "medal"      
         verbose_name_plural = "medals"  
 
-        
+##### The ticket class, when user buys the ticket
+class Ticket(models.Model):
+    user = models.ForeignKey(UserData, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    category = models.CharField(max_length=1, choices=[("A", "Category A"), ("B", "Category B")])
+    ticket_type = models.CharField(max_length=50)
+    quantity = models.PositiveIntegerField(default=1)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    visa_last_four = models.CharField(max_length=4, blank=True, null=True)  
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "ticket"   
+        verbose_name = "tickets"      
+        verbose_name_plural = "ticket_value"  

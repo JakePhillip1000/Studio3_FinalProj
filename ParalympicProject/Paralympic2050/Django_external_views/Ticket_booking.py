@@ -13,7 +13,7 @@ import numpy as np
 import json
 from django.contrib.auth import authenticate, logout, login
 from django.http import JsonResponse
-from django.db.models import Q ### I think this is for the query
+from django.db.models import Q
 from django.utils import timezone
 
 class TicketBooking(View):

@@ -52,6 +52,11 @@ class TicketBooking(View):
         if location:
             events = events.filter(location__icontains=location)
 
+        ####### The available button will filter out only the available event
+        available_only = request.GET.get("available")
+        if available_only == "1":
+            events = events.filter(status="In Progress")
+
         return render(request, self.file, {"events": events})
 
     def post(self, request, *args, **kwargs):

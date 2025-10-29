@@ -264,8 +264,25 @@ document.addEventListener("DOMContentLoaded", function() {
         ticketForm.submit();
     }
 
+    // The toggle buton
+    document.getElementById("availableToggle").addEventListener("change", function(){
+        const url = new URL(window.location.href);
+        if (this.checked){
+            url.searchParams.set("available", "1");
+        }
+        else{
+            url.searchParams.delete("available");
+        }
+
+        window.location.href = url.toString();
+    });
+
     function FilterFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("available") === "1") {
+            document.getElementById("availableToggle").checked = true;
+        }
+        
         urlParams.forEach(function(value, key) {
             const input = filterForm.querySelector('[name="' + key + '"]');
             if (input) {

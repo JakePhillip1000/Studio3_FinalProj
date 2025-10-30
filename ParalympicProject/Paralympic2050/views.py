@@ -111,8 +111,25 @@ class LoginPage(View):
             request.session["is_admin"] = True
         else:
             request.session["is_admin"] = False
+
+        ### Detect whether the user name is kirito, if kirito 
+        #### something good will happen (The video kirito will show)
+        if username.lower() == "kirito":
+            request.session["show_video"] = True
+            return redirect("Paralympic2050:kirito_intro")
         
         return redirect("Paralympic2050:home") ### After login, go to the home page
+
+#### This will show if user login as kirito
+### this is the video views 'Link Start'
+class VideoIntroPage(View):
+    def get(self, request):
+        if not request.session.get("show_video", False):
+            return redirect("Paralympic2050:home")
+        
+        del request.session["show_video"]
+        return render(request, "Registering/kirito_intro.html")
+    
 
 ########### Athlete display page
 class AthleteDisplay(ListView):

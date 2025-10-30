@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paralympic2050: LINK START!!!</title>
+
+    {% block css_style %}
+        <link rel="stylesheet" href="{% static 'css_file/kirito_intro.css' %}?v=1.0">
+        <link rel="icon" type = "image/png" href="{% static 'img/login_register_img/IPC_logo.png'%}">
+    {% endblock %}
+</head>
+<body>
+    <section class="video-section">
+        <video class="video-play" autoplay>
+            <source src="{% static 'img/videos/LinkStart.mp4' %}" type="video/mp4">
+        </video>
+    </section>
+
+    <script>
+        const video = document.querySelector(".video-play");
+
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaElementSource(video);
+        const gainNode = audioContext.createGain();
+        source.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        gainNode.gain.value = 1.0;
+
+        video.addEventListener("click", function () {
+            if (video.muted) {
+                video.muted = false;
+                audioContext.resume();
+            } 
+            else {
+                video.muted = true;
+            }
+            video.play();
+        });
+
+        video.addEventListener("ended", function () {
+            window.location.href = "{% url 'Paralympic2050:home' %}";
+        });
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 import os, sys
 from Paralympic2050 import views
-from .views import RegisterPage, LoginPage, AthleteDisplay, LogoutView
+from .views import RegisterPage, LoginPage, AthleteDisplay, LogoutView, VideoIntroPage
 
 #### import the external pages
 from .Django_external_views.homepage_view import HomePage
@@ -25,6 +25,8 @@ urlpatterns = [
     path("medals/", MedalSummary.as_view(), name = "medals"),
     path("ticket/", TicketBooking.as_view(), name = "ticket"),
     path("shop/", Shopping.as_view(), name = "shop"),
+    path("video_intro/", VideoIntroPage.as_view(), name="kirito_intro"),
+
 
     ### logout reloading
     path("logout/", LogoutView.as_view(), name="logout"),

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% extends "menu.html" %}
+        {% block title %}Paralympic2050 (Ticket Booking){% endblock %}
+
+        {% block content %}
+        {% load static %}
+
+        {% block css_style %}
+            <link rel="stylesheet" href="{% static 'css_file/shop.css' %}?v=1.0">
+        {% endblock %}
+    </head>
+
+<body>
+    <!--Banner displaying-->
+    <section class = "banner">
+        <img src="{% static 'img/banner_img/shop1.png' %}" alt="Paralympic Shop" width="100%">
+    </section>
+
+    <!--
+        This one is the sop item section, it will automatically generate
+        by using Js code... I will use the document.createElement method
+    -->
+    <section id="shopContainer" class="shop-container"></section>
+
+
+    <!--Loading the JS script-->
+    <script>
+        const STATIC_URL = "{% static '' %}";
+    </script>
+
+    <script src="{% static 'js_file/shop.js' %}?v=1.1"></script>
+
+    {% endblock %}
+</body>
+</html>

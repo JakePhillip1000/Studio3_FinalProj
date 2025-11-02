@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% extends "menu.html" %}
+        {% block title %}Paralympic2050 (About){% endblock %}
+
+        {% block content %}
+        {% load static %}
+
+        {% block css_style %}
+            <link rel="stylesheet" href="{% static 'css_file/about.css' %}?v=1.0">
+        {% endblock %}
+    </head>
+
+<body>
+    <div class="about-container">
+        <div class="number-content-header">
+            <span class="number-cont">#1. The beginning of Paralympic games</span>
+            <h1 class="main-title">The Paralympic Games</h1>
+        </div>
+
+        <div class="main-image">
+            <img id="mainImage" src="{% static 'img/banner_img/Paralympic2.png' %}" alt="Main Image">
+        </div>
+
+        <div class="thumbnail-row">
+            <img src="{% static 'img/banner_img/Paralympic.png' %}" alt="Thumb 1" class="thumbnail active" data-index="0">
+            <img src="{% static 'img/banner_img/Paralympic2.png' %}" alt="Thumb 2" class="thumbnail" data-index="1">
+            <img src="{% static 'img/banner_img/Paralympic3.png' %}" alt="Thumb 3" class="thumbnail" data-index="2">
+            <img src="{% static 'img/banner_img/Paralympic4.png' %}" alt="Thumb 4" class="thumbnail" data-index="3">
+        </div>
+
+        <div class="paralympic-desc">
+            <p>
+                Paralymic games are international sport events for athletes with physical disabilities and first established since 1960. 
+                Similarly, both Paralympic and Olympic games held every four years. This  bring together the world's best athletes to compete 
+                in differernt sports. The event are held in same year and same city as the Olympic games. Most of the paralympic sport, 
+                the athletes are grouped into classes based on their balance, coorfination and skills of each sport
+            </p>
+        </div>
+    </div>
+
+    <!--Loading the JS script-->
+    <script src="{% static 'js_file/about.js' %}?v=1.1"></script>
+    {% endblock %}
+</body>
+</html>

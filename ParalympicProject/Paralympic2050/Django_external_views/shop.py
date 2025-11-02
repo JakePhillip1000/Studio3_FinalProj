@@ -24,5 +24,14 @@ class Shopping(View):
 
     def post(self, request, *args, **kwargs):
         return redirect("Paralympic2050:shop")
+
+class AboutPage(View):
+    about_file = "Displaying/about.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.about_file)
+
+    def post(self, request, *args, **kwargs):
+        return redirect("Paralympic2050:about")
     
     

@@ -8,7 +8,7 @@ from .Django_external_views.homepage_view import HomePage
 from .Django_external_views.Event_manage_view import EventManagement
 from .Django_external_views.Medal_summary_view import MedalSummary
 from .Django_external_views.Ticket_booking import TicketBooking
-from .Django_external_views.shop import Shopping
+from .Django_external_views.shop import Shopping, AboutPage
 
 #### Application name
 app_name = "Paralympic2050"
@@ -26,6 +26,7 @@ urlpatterns = [
     path("ticket/", TicketBooking.as_view(), name = "ticket"),
     path("shop/", Shopping.as_view(), name = "shop"),
     path("video_intro/", VideoIntroPage.as_view(), name="kirito_intro"),
+    path("about/", AboutPage.as_view(), name= "about"),
 
 
     ### logout reloading
